@@ -9,11 +9,29 @@ export default class MySection extends HTMLElement{
     constructor(){
         super();
         this.attachShadow({mode: "open"});
-        Promise.resolve(MySection.components()).then(html=>{
-            this.shadowRoot.innerHTML = html
-        })
         console.log("Section on");
     }
+
+    handleEvent(e){
+        (e.type === 'click') ? this.enviarWorker(e) : undefined;
+    }
+
+    enviarWorker(e){
+        e.preventDefault();
+        alert('oni oni oni')
+        
+    }
+
+    connectedCallback(){
+        Promise.resolve(MySection.components()).then(html=>{
+            this.shadowRoot.innerHTML = html
+            this.MySection = this.shadowRoot.querySelector("#boton")
+            this.MySection.addEventListener('click', this.handleEvent.bind(this))
+        })
+    }
+
+
+
 }
 
 customElements.define(name, MySection);

@@ -9,10 +9,24 @@ export default class MyFooter extends HTMLElement{
     constructor(){
         super();
         this.attachShadow({mode: "open"});
-        Promise.resolve(MyFooter.components()).then(html=>{
-            this.shadowRoot.innerHTML = html
-        })
         console.log("Footer on");
+    }
+
+    handleEvent(e){
+        (e.type === 'click') ? this.enviarWorker(e) : undefined;
+    }
+
+    enviarWorker(e){
+        e.preventDefault()
+        alert('On')
+    }
+
+    connectedCallback(){
+        Promise.resolve(MyFooter.components()).then(html=>{
+            this.shadowRoot.innerHTML = html;
+            this.MyFooter = this.shadowRoot.querySelector("#boton");
+            this.MyFooter.addEventListener("click", this.handleEvent.bind(this))
+        })
     }
 }
 
